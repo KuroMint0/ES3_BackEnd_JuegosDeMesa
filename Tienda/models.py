@@ -10,11 +10,12 @@ class Categoria(models.Model):
 
 class Juego(models.Model):
     nombre = models.CharField(max_length=100)
-    sinopsis = models.TextField()
+    descripcion = models.TextField()
     precio = models.PositiveIntegerField()
     cant_jugadores = models.PositiveIntegerField()
     edad_min = models.PositiveIntegerField()
     stock = models.PositiveIntegerField()
+    imagen = models.ImageField(upload_to='juegos/', blank=True, null=True)
     is_disponible = models.BooleanField(default=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
