@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import Categoria, Juego, Pedido
 
 # Register your models here.
@@ -10,7 +11,7 @@ class CategoriaAdmin(admin.ModelAdmin):
 
 @admin.register(Juego)
 class JuegoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'categoria', 'precio_formateado', 'cant_jugadores', 'edad_min', 'stock', 'disponibilidad', 'imagen')
+    list_display = ('nombre', 'categoria', 'precio_formateado', 'cant_jugadores', 'edad_min', 'stock', 'disponibilidad', 'miniatura')
     list_filter = ('categoria', 'is_disponible')
     search_fields = ('nombre',)
 
@@ -20,6 +21,15 @@ class JuegoAdmin(admin.ModelAdmin):
     @admin.display(description="Disponibilidad")
     def disponibilidad(self, obj):
         return "Disponible" if obj.is_disponible else "No disponible"
+
+    @admin.display(description="Imagen")
+    def miniatura(self, obj):
+        if obj.imagen:
+            return format_html(
+                '<img src="{}" style="height:60px; border-radius:4px;" />',
+                obj.imagen.url
+            )
+        return 'Sin imagen'
 
 @admin.register(Pedido)
 class PedidoAdmin(admin.ModelAdmin):
