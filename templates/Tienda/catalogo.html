@@ -1,0 +1,65 @@
+{% extends "Tienda/base.html" %}
+
+{% block titulo %}Catálogo | Juegos de mesa{% endblock %}
+
+{% block contenido %}
+    <section class="catalogo-encabezado">
+        <p class="categoria-etiqueta">JUEGOS PARA COMPARTIR</p>
+        <h1>Encuentra tu próximo juego favorito</h1>
+        <p>Explora nuestro catálogo y descubre una nueva forma de jugar.</p>
+    </section>
+
+    <form class="filtros" method="get">
+        <div class="campo-filtro">
+            <label for="busqueda">Buscar por nombre</label>
+            <input
+                id="busqueda"
+                type="search"
+                name="q"
+                value="{{ busqueda }}"
+                placeholder="Ej.: Catan"
+            >
+        </div>
+
+        <div class="campo-filtro">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria">
+                <option value="">Todas las categorías</option>
+                {% for categoria in categorias %}
+                    <option
+                        value="{{ categoria.id }}"
+                        {% if categoria.id|stringformat:"s" == categoria_seleccionada %}selected{% endif %}
+                    >
+                        {{ categoria.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit">Buscar juegos</button>
+    </form>
+
+    <section class="juegos-grid" aria-label="Juegos disponibles">
+        {% for juego in juegos %}
+            <article class="tarjeta">
+                {% if juego.imagen %}
+                    <img
+                        src="{{ juego.imagen.url }}"
+                        alt="Caja de {{ juego.nombre }}"
+                        width="220"
+                    >
+                {% else %}
+                    <div class="imagen-sin-portada" aria-hidden="true">♟</div>
+                {% endif %}
+                <div class="tarjeta-contenido">
+                    <span class="categoria-etiqueta">{{ juego.categoria.nombre }}</span>
+                    <h2><a href="{% url 'detalle_juego' juego.id %}">{{ juego.nombre }}</a></h2>
+                    <p class="precio">${{ juego.precio }}</p>
+                    <a class="button" href="{% url 'detalle_juego' juego.id %}">Ver detalles</a>
+                </div>
+            </article>
+        {% empty %}
+            <p class="sin-resultados">No encontramos juegos con esos filtros. Prueba con otra búsqueda.</p>
+        {% endfor %}
+    </section>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "Tienda/base.html" %}
+
+{% block titulo %}Comprobante de pedido | Juegos de mesa{% endblock %}
+
+{% block contenido %}
+    <section class="panel">
+        <span class="categoria-etiqueta">PEDIDO CONFIRMADO</span>
+        <h1>Pedido recibido</h1>
+        <p class="texto-suave">Guarda este comprobante para retirar tu pedido en la tienda.</p>
+
+        <dl>
+            <dt><strong>Código de pedido</strong></dt>
+            <dd>{{ pedido.cod_identificacion }}</dd>
+
+            <dt><strong>Juego</strong></dt>
+            <dd>{{ pedido.juego.nombre }}</dd>
+
+            <dt><strong>Nombre</strong></dt>
+            <dd>{{ pedido.nombre_cliente }}</dd>
+
+            <dt><strong>Cantidad</strong></dt>
+            <dd>{{ pedido.cant_unidades }}</dd>
+
+            <dt><strong>Total</strong></dt>
+            <dd>${{ total }}</dd>
+
+            <dt><strong>Fecha y hora</strong></dt>
+            <dd>{{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</dd>
+        </dl>
+
+        <p><a class="button" href="{% url 'catalogo' %}">Volver al catálogo</a></p>
+    </section>
+{% endblock %}

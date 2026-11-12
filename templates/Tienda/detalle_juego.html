@@ -1,0 +1,59 @@
+{% extends "Tienda/base.html" %}
+
+{% block titulo %}{{ juego.nombre }} | Juegos de mesa{% endblock %}
+
+{% block contenido %}
+    <a class="volver" href="{% url 'catalogo' %}">← Volver al catálogo</a>
+
+    <article class="detalle">
+        <div>
+            {% if juego.imagen %}
+                <img src="{{ juego.imagen.url }}" alt="Caja de {{ juego.nombre }}">
+            {% else %}
+                <div class="imagen-sin-portada" aria-hidden="true">♟</div>
+            {% endif %}
+        </div>
+
+        <div>
+            <span class="categoria-etiqueta">{{ juego.categoria.nombre }}</span>
+            <h1>{{ juego.nombre }}</h1>
+            <p class="precio">Precio: ${{ juego.precio }}</p>
+            <p class="detalle-descripcion">{{ juego.descripcion }}</p>
+            <ul class="datos-juego">
+                <li><strong>Jugadores:</strong> {{ juego.cant_jugadores }}</li>
+                <li><strong>Edad mínima:</strong> {{ juego.edad_min }} años</li>
+            </ul>
+
+            {% if juego.stock > 0 %}
+                <section class="seccion-pedido">
+                <form class="formulario" method="post">
+                    {% csrf_token %}
+                    <h2>Reserva tu juego</h2>
+                    <p class="texto-suave">Completa tus datos y coordina el retiro en tienda.</p>
+                    <label for="nombre_cliente">Nombre</label>
+                    <input id="nombre_cliente" name="nombre_cliente" type="text" maxlength="100" required>
+
+                    <label for="correo">Correo electrónico</label>
+                    <input id="correo" name="correo" type="email" maxlength="254" required>
+
+                    <label for="telefono">Teléfono</label>
+                    <input id="telefono" name="telefono" type="tel" maxlength="15" required>
+
+                    <label for="cant_unidades">Cantidad (disponibles: {{ juego.stock }})</label>
+                    <input
+                        id="cant_unidades"
+                        name="cant_unidades"
+                        type="number"
+                        min="1"
+                        max="5"
+                        required
+                    >
+
+                </form>
+                </section>
+            {% else %}
+                <p class="agotado">Agotado por el momento</p>
+            {% endif %}
+        </div>
+    </article>
+{% endblock %}
