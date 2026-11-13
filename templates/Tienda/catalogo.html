@@ -55,6 +55,9 @@
                     <span class="categoria-etiqueta">{{ juego.categoria.nombre }}</span>
                     <h2><a href="{% url 'detalle_juego' juego.id %}">{{ juego.nombre }}</a></h2>
                     <p class="precio">${{ juego.precio }}</p>
+                    {% if juego.stock == 0 %}
+                        <p class="agotado">Agotado</p>
+                    {% endif %}
                     <a class="button" href="{% url 'detalle_juego' juego.id %}">Ver detalles</a>
                 </div>
             </article>
