@@ -1,5 +1,4 @@
 {% extends "Tienda/base.html" %}
-{% load clp %}
 
 {% block titulo %}Catálogo | Juegos de mesa{% endblock %}
 
@@ -55,7 +54,7 @@
                 <div class="tarjeta-contenido">
                     <span class="categoria-etiqueta">{{ juego.categoria.nombre }}</span>
                     <h2><a href="{% url 'detalle_juego' juego.id %}">{{ juego.nombre }}</a></h2>
-                    <p class="precio">{{ juego.precio|clp }}</p>
+                    <p class="precio">{{ juego.precio_formateado }}</p>
                     {% if juego.stock == 0 %}
                         <p class="agotado">Agotado</p>
                     {% endif %}

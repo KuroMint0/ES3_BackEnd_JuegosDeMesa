@@ -1,7 +1,10 @@
 from django.shortcuts import get_object_or_404, render
 
 from .models import Categoria, Juego, Pedido
-from .templatetags.clp import clp
+
+
+def _formatear_pesos(valor):
+    return f"${valor:,}".replace(",", ".")
 
 
 def catalogo(request):
@@ -13,6 +16,9 @@ def catalogo(request):
         juegos = juegos.filter(nombre__icontains=busqueda)
     if categoria_seleccionada.isdigit():
         juegos = juegos.filter(categoria_id=int(categoria_seleccionada))
+
+    for juego in juegos:
+        juego.precio_formateado = _formatear_pesos(juego.precio)
 
     return render(
         request,
@@ -37,7 +43,7 @@ def detalle_juego(request, juego_id):
         "Tienda/detalle_juego.html",
         {
             "juego": juego,
-            "precio_formateado": clp(juego.precio),
+            "precio_formateado": _formatear_pesos(juego.precio),
         },
     )
 
@@ -51,5 +57,8 @@ def comprobante(request, pedido_id):
     return render(
         request,
         "Tienda/comprobante.html",
-        {"pedido": pedido, "total": total},
+        {
+            "pedido": pedido,
+            "total_formateado": _formatear_pesos(total),
+        },
     )
