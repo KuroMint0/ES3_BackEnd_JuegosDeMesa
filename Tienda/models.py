@@ -15,7 +15,7 @@ class Juego(models.Model):
     cant_jugadores = models.PositiveIntegerField()
     edad_min = models.PositiveIntegerField()
     stock = models.PositiveIntegerField()
-    imagen = models.ImageField(upload_to='juegos/', blank=True, null=True)
+    imagen = models.ImageField(upload_to='juegos/')
     is_disponible = models.BooleanField(default=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 

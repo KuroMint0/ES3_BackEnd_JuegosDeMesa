@@ -34,9 +34,9 @@ class JuegoAdmin(admin.ModelAdmin):
 
 @admin.register(Pedido)
 class PedidoAdmin(admin.ModelAdmin):
-    list_display = ('codigo', 'nombre_cliente', 'cant_unidades', 'fecha_pedido')
+    list_display = ('codigo', 'juego', 'nombre_cliente', 'cant_unidades', 'fecha_pedido')
     list_filter = ('juego',)
-    search_fields = ('nombre', 'correo')
+    search_fields = ('nombre_cliente', 'correo')
 
     def codigo(self, obj):
         return f"Pedido #{obj.cod_identificacion}"
