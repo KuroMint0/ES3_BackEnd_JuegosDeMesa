@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 
 from .models import Categoria, Juego, Pedido
+from .templatetags.clp import clp
 
 
 def catalogo(request):
@@ -31,11 +32,13 @@ def detalle_juego(request, juego_id):
         pk=juego_id,
         is_disponible=True,
     )
-    precio_formateado = f"${juego.precio:,}".replace(",", ".")
     return render(
         request,
         "Tienda/detalle_juego.html",
-        {"juego": juego, "precio_formateado": precio_formateado},
+        {
+            "juego": juego,
+            "precio_formateado": clp(juego.precio),
+        },
     )
 
 

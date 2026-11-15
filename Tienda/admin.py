@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from .models import Categoria, Juego, Pedido
+from .templatetags.clp import clp
 
 # Register your models here.
 
@@ -15,8 +16,9 @@ class JuegoAdmin(admin.ModelAdmin):
     list_filter = ('categoria', 'is_disponible')
     search_fields = ('nombre',)
 
+    @admin.display(description="Precio")
     def precio_formateado(self, obj):
-        return f"${obj.precio}".replace(',', '.')
+        return clp(obj.precio)
 
     @admin.display(description="Disponibilidad")
     def disponibilidad(self, obj):

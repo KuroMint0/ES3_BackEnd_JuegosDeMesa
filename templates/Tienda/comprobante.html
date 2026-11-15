@@ -1,4 +1,5 @@
 {% extends "Tienda/base.html" %}
+{% load clp %}
 
 {% block titulo %}Comprobante de pedido | Juegos de mesa{% endblock %}
 
@@ -22,7 +23,7 @@
             <dd>{{ pedido.cant_unidades }}</dd>
 
             <dt><strong>Total</strong></dt>
-            <dd>${{ total }}</dd>
+            <dd>{{ total|clp }}</dd>
 
             <dt><strong>Fecha y hora</strong></dt>
             <dd>{{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</dd>
