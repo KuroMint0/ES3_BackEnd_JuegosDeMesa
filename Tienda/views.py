@@ -31,7 +31,12 @@ def detalle_juego(request, juego_id):
         pk=juego_id,
         is_disponible=True,
     )
-    return render(request, "Tienda/detalle_juego.html", {"juego": juego})
+    precio_formateado = f"${juego.precio:,}".replace(",", ".")
+    return render(
+        request,
+        "Tienda/detalle_juego.html",
+        {"juego": juego, "precio_formateado": precio_formateado},
+    )
 
 
 def comprobante(request, pedido_id):

@@ -17,11 +17,20 @@
         <div>
             <span class="categoria-etiqueta">{{ juego.categoria.nombre }}</span>
             <h1>{{ juego.nombre }}</h1>
-            <p class="precio">Precio: ${{ juego.precio }}</p>
+            <p class="precio">Precio: {{ precio_formateado }}</p>
             <p class="detalle-descripcion">{{ juego.descripcion }}</p>
             <ul class="datos-juego">
                 <li><strong>Jugadores:</strong> {{ juego.cant_jugadores }}</li>
                 <li><strong>Edad mínima:</strong> {{ juego.edad_min }} años</li>
+                <li><strong>Disponibilidad:</strong> Disponible para la venta</li>
+                <li>
+                    <strong>Stock:</strong>
+                    {% if juego.stock > 0 %}
+                        {{ juego.stock }} unidades
+                    {% else %}
+                        <span class="agotado">Agotado</span>
+                    {% endif %}
+                </li>
             </ul>
 
             {% if juego.stock > 0 %}
