@@ -63,7 +63,7 @@ def detalle_juego(request, juego_id):
                     juego_bloqueado.stock -= cantidad
                     juego_bloqueado.save(update_fields=["stock"])
 
-                    return redirect("Tienda:pedido_exitoso", pedido_id=pedido.id)
+                    return redirect("comprobante", pedido_id=pedido.id)
     else:
         form = formularioPedidos(juego=juego)
 
