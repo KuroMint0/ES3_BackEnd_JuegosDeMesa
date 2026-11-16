@@ -24,7 +24,7 @@ class formularioPedidos(forms.ModelForm):
         if self.juego is not None:
             self.fields["cant_unidades"].label = f"Cantidad (disponible: {self.juego.stock})"
 
-    def verificar_stock(self):
+    def clean_cant_unidades(self):
         cantidad = self.cleaned_data.get("cant_unidades")
         if cantidad is None or cantidad < 1 or cantidad > 5:
             raise forms.ValidationError("La cantidad debe estar entre 1 y 5 unidades.")
@@ -33,6 +33,6 @@ class formularioPedidos(forms.ModelForm):
             if self.juego.stock <= 0:
                 raise forms.ValidationError("El juego está agotado.")
             if cantidad > self.juego.stock:
-                raise forms.validationError(f"Solo hay {self.juego.stock} unidades disponibles.")
+                raise forms.ValidationError(f"Solo hay {self.juego.stock} unidades disponibles.")
 
         return cantidad

@@ -33,7 +33,7 @@
 * **`static/styles.css`:** Hoja de estilos completa, incluyendo variables de color, diseño adaptativo (`@media`), tarjetas de productos y estilos de botones/inputs.
 
 ### Backend, Administración y Validaciones (Google Gemini)
-* **`Tienda/forms.py`:** Orientación sobre cómo armar `formularioPedidos` (`ModelForm`), cómo inyectar dinámicamente la instancia del juego mediante `__init__` y cómo estructurar el método `verificar_stock` para validar rangos y disponibilidad de stock.
+* **`Tienda/forms.py`:** Orientación sobre cómo armar `formularioPedidos` (`ModelForm`), cómo inyectar dinámicamente la instancia del juego mediante `__init__` y cómo estructurar el método `clean_cant_unidades` para validar rangos y disponibilidad de stock.
 * **`Tienda/views.py`:** Guía sobre la arquitectura del flujo `POST` en `detalle_juego`, los pasos para descontar el stock de forma segura dentro de una transacción, la generación de IDs únicos y el uso correcto de `redirect` hacia el comprobante.
 * **`Tienda/admin.py`:** Revisión diagnóstica para detectar inconsistencias entre los nombres de campos del modelo `Pedido` y las configuraciones de búsqueda (`search_fields`) y listado (`list_display`).
 * **`templates/Tienda/detalle_juego.html` y `static/styles.css`:** Orientación sobre cómo conectar los campos del `ModelForm` con las etiquetas del template existente para conservar la estética y mostrar mensajes de error de validación.
