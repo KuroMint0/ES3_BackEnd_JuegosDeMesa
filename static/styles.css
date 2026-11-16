@@ -366,3 +366,14 @@ input:focus, select:focus {
         margin-bottom: 0.75rem;
     }
 }
+
+.errorlist {
+    margin: -0.25rem 0 0.4rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    list-style: none;
+    color: #7a3030;
+    background: #f9e9e7;
+    font-size: 0.85rem;
+    font-weight: 600;
+}

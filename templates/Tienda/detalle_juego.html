@@ -35,30 +35,32 @@
 
             {% if juego.stock > 0 %}
                 <section class="seccion-pedido">
-                <form class="formulario" method="post">
-                    {% csrf_token %}
-                    <h2>Reserva tu juego</h2>
-                    <p class="texto-suave">Completa tus datos y coordina el retiro en tienda.</p>
-                    <label for="nombre_cliente">Nombre</label>
-                    <input id="nombre_cliente" name="nombre_cliente" type="text" maxlength="100" required>
+                    <form class ="formulario" method="post">
+                        {% csrf_token %}
+                        <h2>Realizar pedido</h2>
+                        
+                        {% if form.non_field_errors %}
+                            {{ form.non_field_errors }}
+                        {% endif %}
 
-                    <label for="correo">Correo electrónico</label>
-                    <input id="correo" name="correo" type="email" maxlength="254" required>
+                        <label for="{{ form.nombre_cliente.id_for_label }}">{{ form.nombre_cliente.label }}</label>
+                        {{ form.nombre_cliente }}
+                        {{ form.nombre_cliente.errors }}
 
-                    <label for="telefono">Teléfono</label>
-                    <input id="telefono" name="telefono" type="tel" maxlength="15" required>
+                        <label for="{{ form.correo.id_for_label }}">{{ form.correo.label }}</label>
+                        {{ form.correo }}
+                        {{ form.correo.errors }}
 
-                    <label for="cant_unidades">Cantidad (disponibles: {{ juego.stock }})</label>
-                    <input
-                        id="cant_unidades"
-                        name="cant_unidades"
-                        type="number"
-                        min="1"
-                        max="5"
-                        required
-                    >
+                        <label for="{{ form.telefono.id_for_label }}">{{ form.telefono.label }}</label>
+                        {{ form.telefono }}
+                        {{ form.telefono.errors }}
 
-                </form>
+                        <label for="{{ form.cant_unidades.id_for_label }}">{{ form.cant_unidades.label }}</label>
+                        {{ form.cant_unidades }}
+                        {{ form.cant_unidades.errors }}
+
+                        <button type="submit">Confirmar pedido</button>
+                    </form>
                 </section>
             {% else %}
                 <p class="agotado">Agotado por el momento</p>

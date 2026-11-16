@@ -1,7 +1,7 @@
 from django import forms
 from .models import Pedido
 
-class formularioPedidos(forms.modelForm):
+class formularioPedidos(forms.ModelForm):
     class Meta:
         model = Pedido
         fields = ['nombre_cliente', 'correo', 'telefono', 'cant_unidades']
@@ -18,21 +18,21 @@ class formularioPedidos(forms.modelForm):
             "cant_unidades": forms.NumberInput(attrs={"min": 1, "max": 5, "required": True}),
         }
 
-        def __init__(self, *args, **kwargs):
-            self.juego = kwargs.pop("juego", None)
-            super().__init__(*args, **kwargs)
-            if self.juego is not None:
-                self.fields["cant_unidades"].label = f"Cantidad (disponible: {self.juego.stock})"
+    def __init__(self, *args, **kwargs):
+        self.juego = kwargs.pop("juego", None)
+        super().__init__(*args, **kwargs)
+        if self.juego is not None:
+            self.fields["cant_unidades"].label = f"Cantidad (disponible: {self.juego.stock})"
 
-        def verificar_stock(self):
-            cantidad = self.cleaned_data.get("cant_unidades")
-            if cantidad is None or cantidad < 1 or cantidad > 5:
-                raise forms.ValidationError("La cantidad debe estar entre 1 y 5 unidades.")
+    def verificar_stock(self):
+        cantidad = self.cleaned_data.get("cant_unidades")
+        if cantidad is None or cantidad < 1 or cantidad > 5:
+            raise forms.ValidationError("La cantidad debe estar entre 1 y 5 unidades.")
 
-            if self.juego is not None:
-                if self.juego.stock <= 0:
-                    raise forms.ValidationError("El juego está agotado.")
-                if cantidad > self.juego.stock:
-                    raise forms.validationError(f"Solo hay {self.juego.stock} unidades disponibles.")
+        if self.juego is not None:
+            if self.juego.stock <= 0:
+                raise forms.ValidationError("El juego está agotado.")
+            if cantidad > self.juego.stock:
+                raise forms.validationError(f"Solo hay {self.juego.stock} unidades disponibles.")
 
-            return cantidad
+        return cantidad

@@ -77,3 +77,18 @@ def detalle_juego(request, juego_id):
             "precio_formateado": _formatear_pesos(juego.precio),
         },
     )
+
+def comprobante(request, pedido_id):
+    pedido = get_object_or_404(
+        Pedido.objects.select_related("juego"),
+        pk=pedido_id,
+    )
+    total = pedido.cant_unidades * pedido.juego.precio
+    return render(
+        request,
+        "Tienda/comprobante.html",
+        {
+            "pedido": pedido,
+            "total_formateado": _formatear_pesos(total),
+        },
+    )
